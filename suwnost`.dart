@@ -1,3 +1,4 @@
+import 'package:test/test.dart';
 class Action{
   String name;
   int id;
@@ -40,6 +41,10 @@ class Actions{
     acts.removeAt(actionIndex);
   }
 }
+int Add(int x,int y){     
+// Function to be tested { 
+   return x+y; 
+}  
 
 
 void main(){
@@ -61,5 +66,15 @@ void main(){
   for (var act in festi.getListActions(true,2,2)){
     print(act.name);
   }
+  test("test to check add method",(){  
+      // Arrange 
+      var expected = 30; 
+      
+      // Act 
+      var actual = Add(10,20); 
+      
+      // Asset 
+      expect(actual,expected); 
+   }); 
 
 }
