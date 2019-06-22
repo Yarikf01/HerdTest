@@ -1,59 +1,59 @@
 class Action{
   int id;
   String description;
-  DateTime start_time;
-  Action(this.id,this.description,this.start_time);
+  DateTime startTime;
+  Action(this.id,this.description,this.startTime);
 
 }
 
+
 class Actions{
-  List acts;
+  List <Action>acts;
   Actions():
       acts = [];
 
-  void addAction(some_action) {
-    acts.add(some_action);
+  void addAction(Action someAction) {
+    acts.add(someAction);
   }
-  int get number_of_actions => acts.length;
-  get_list_actions(){
-    var res = [];
+
+  int get numberOfActions => acts.length;
+
+  getListActions(){
+    var res = <Action>[];
     res.addAll(acts);
-    res.sort((a, b) => a.start_time.compareTo(b.start_time));
+    res.sort((a, b) => a.startTime.compareTo(b.startTime));
     return res;
   }
-  get_action_by_id(some_id){
-    //var action = acts.where((p) => p.id == some_id);
-    for (var act in acts){
-      if ((act.id) == some_id){
-        var action = act;
-        return action;
-        break;
-    }
-    }
+
+  Action getActionById(int someId){
+    return acts.firstWhere((i) => i.id == someId);
   }
-  void del_action_by_id(some_id){
-    for (var act in acts){
-      if ((act.id) == some_id){
-        acts.remove(act);
-        break;
-      }
-    }
+
+  void delActionById(int someId){
+    var actionIndex = acts.lastIndexWhere((i) => i.id == someId);
+    acts.removeAt(actionIndex);
   }
 }
+
+
 void main(){
-  var vdnx = Action(123,'interesting',DateTime(2019,21,6));
-  var fue = Action(121,'tasty',DateTime(2019,10,6));
+  var vdnx = Action(123,'interesting',DateTime(2019,6,21));
+  var fue = Action(121,'tasty',DateTime(2019,6,10));
   var festi = Actions();
-  festi.add_action(vdnx);
-  festi.add_action(fue);
-  for (var act in festi.get_list_actions()){
+  festi.addAction(vdnx);
+  festi.addAction(fue);
+  print(festi);
+
+  for (var act in festi.getListActions()){
     print(act.id);
   }
-  print(festi.number_of_actions);
-  var a = festi.get_action_by_id(123);
+  
+  print(festi.numberOfActions);
+  var a = festi.getActionById(123);
   print(a.description);
-  festi.del_action_by_id(123);
-  for (var act in festi.get_list_actions()){
+  festi.delActionById(123);
+
+  for (var act in festi.getListActions()){
     print(act.id);
   }
 
