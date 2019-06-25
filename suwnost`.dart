@@ -1,9 +1,12 @@
+import 'dart:math';
+
 import 'package:test/test.dart';
 class Action{
   String name;
   int id;
   String description;
   DateTime startTime;
+  DateTime nextTime;
   Action(this.name,this.id,this.description,this.startTime);
 
 }
@@ -41,11 +44,6 @@ class Actions{
     acts.removeAt(actionIndex);
   }
 }
-int Add(int x,int y){     
-// Function to be tested { 
-   return x+y; 
-}  
-
 
 void main(){
   var vdnx = Action('VDNX',121,'interesting',DateTime(2019,6,21));
@@ -53,28 +51,32 @@ void main(){
   var vinefestival = Action('Festival of wine',123,'alcoholic',DateTime(2019,5,25));
   var raceOfNations = Action('Race Of Nations',124,'sport',DateTime(2019,5,30));
   var festi = Actions();
-  festi.addAction(vdnx);
-  festi.addAction(fue);
-  festi.addAction(raceOfNations);
-  festi.addAction(vinefestival);
-
-
-  for (var act in festi.getListActions(true,0,2)){
-    print(act.name);
-  }
-
-  for (var act in festi.getListActions(true,2,2)){
-    print(act.name);
-  }
-  test("test to check add method",(){  
+  test("check add method",(){  
       // Arrange 
-      var expected = 30; 
-      
+      festi.addAction(vdnx);
+      bool expected = true;
+      var a = festi.acts.firstWhere((i) => i == vdnx,orElse:() => null); 
+      if (a == null){
+        expected = false;
+      }
       // Act 
-      var actual = Add(10,20); 
-      
+      var actual = true;
       // Asset 
       expect(actual,expected); 
+   });
+   test("check number of actions",(){
+     bool expected = festi.numberOfActions == festi.acts.length;
+     bool actual = true;
+     expect(actual,expected);
+
    }); 
+   test("check getListActions with 0 length",(){
+     var testfesti = Actions();
+     bool expected = testfesti.getListActions(true,0,0).length == 0;
+     var actual = true;
+     expect(actual,expected);
+
+   });
+
 
 }
