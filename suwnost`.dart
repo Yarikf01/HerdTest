@@ -54,7 +54,7 @@ class Actions{
       for (var i in singleActs.where((i) => i.startTime.isAfter(current) & i.startTime.isBefore(endtime))){
         res.add(i);
       };
-      for (var i in everyDayActs){
+      for (var object in everyDayActs){
 
         if (i.startTime.isBefore(current)){
           int k = 0;
