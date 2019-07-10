@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:date_utils/date_utils.dart';
 class Action{
-  String name;
+  var name;
   int id;
   String description;
   int daysCounter;
@@ -46,9 +46,10 @@ class Actions{
       return res.reversed.toList().getRange(offset,offset + limit);
     }
   }
+
   getListFromTo(bool ask,DateTime starttime,DateTime endtime){
-    DateTime current = starttime;
-    if (ask == true){
+      DateTime current = starttime;
+    
       List res = [];
 
       for (var i in singleActs.where((i) => i.startTime.isAfter(current) & i.startTime.isBefore(endtime))){
@@ -56,7 +57,7 @@ class Actions{
       };
       for (var object in everyDayActs){
 
-        if (i.startTime.isBefore(current)){
+        if (object.startTime.isBefore(current)){
           int k = 0;
 
           while(k < everyDayActs.length){
@@ -71,7 +72,7 @@ class Actions{
             k += 1;
           }
 
-        }else if (i.startTime.isAfter(current) & i.startTime.isBefore(endtime)){
+        }else if (object.startTime.isAfter(current) & object.startTime.isBefore(endtime)){
           int k = 0;
           
 
@@ -88,8 +89,8 @@ class Actions{
         }
       }
       int k = 0;
-      for (var i in notEveryDayActs){
-        if (i.startTime.isBefore(current)){
+      for (var object in notEveryDayActs){
+        if (object.startTime.isBefore(current)){
           while(k < notEveryDayActs.length){
             DateTime i = current;
             while(i.isBefore(endtime)){
@@ -105,7 +106,7 @@ class Actions{
 
             k += 1;
           }
-        }else if (i.startTime.isAfter(current) & i.startTime.isBefore(endtime)){
+        }else if (object.startTime.isAfter(current) & object.startTime.isBefore(endtime)){
           
       
           while(k < notEveryDayActs.length){
@@ -121,8 +122,12 @@ class Actions{
             k += 1;
           }
         }
+      res = sortir(res);
+      if (ask == true){
+      return res;
+      }else{
+        return res.reversed.toList();
       }
-      return sortir(res);
   }
 
   Action getActionById(int someId){
@@ -133,6 +138,7 @@ class Actions{
     var actionIndex = acts.lastIndexWhere((i) => i.id == someId);
     acts.removeAt(actionIndex);
   }
+
   show(someacts){
     List res = [];
     for (var object in someacts){
@@ -143,22 +149,20 @@ class Actions{
   }
 }}
 
+
 void main(){
-  //var fue = Action('Festival ulichoi edi',122,'tasty',1,DateTime(2019,7,05));
   var buhta = Action('BoohtaFoodStation',991,'supertasty',0,DateTime(2019,6,30));
   var dr = Action('my dr',992,'cool',7,DateTime(2019,6,20));
   var bodich = Action('Bodich',993,'super cool',2,DateTime(2019,6,25));
+
 
   var festi = Actions();
   festi.addAction(bodich);
   festi.addAction(buhta);
   festi.addAction(dr);
-  //festi.addAction(fue);
-  int sum = 0;
-  for (var object in festi.getListFromTo(true,DateTime(2019,6,15),DateTime(2019,6,30))){
-    print(object.startTime);
-    print(object.name);
-    sum += 1;
-  }
-  print(sum);
+  var lst = [];
+    for (var i in festi.getListFromTo(true, DateTime(2019,6,19),DateTime(2019,6,31))){
+        lst.add(i.name);}
+
 }
+
